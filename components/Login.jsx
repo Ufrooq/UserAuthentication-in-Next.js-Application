@@ -29,7 +29,7 @@ const Login = () => {
       {errors && (
         <p className="text-center text-red-600 pb-4">Invalid Credientials !</p>
       )}
-      <h2 className={`mb-1 text-3xl font-semibold`}>Login Form</h2>
+      <h2 className={`my-2 text-3xl font-semibold`}>Login Form</h2>
       <p className={`m-0 mb-3 max-w-[30ch] text-md opacity-50`}>
         Enter Your details below :
       </p>
@@ -57,9 +57,9 @@ const Login = () => {
           Login
         </button>
       </form>
-      <p className="text-md mt-4 text-neutral-500">
+      <p className="text-md text-center mt-4 text-neutral-500">
         Do not have an account?
-        <span className="font-bold text-lg">
+        <span className="font-bold text-lg text-neutral-400">
           <Link href="/register"> Register</Link>
         </span>
       </p>
