@@ -1,3 +1,5 @@
+"use client";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
 
@@ -15,7 +17,10 @@ const UserInfo = () => {
       <p className="text-md text-neutral-500 mb-3">
         Email : umarf9834@gmail.com
       </p>
-      <button className="px-6 py-1 text-md rounded-sm self-center duration-200 border border-neutral-700 bg-neutral-700 hover:bg-transparent">
+      <button
+        onClick={() => signOut()}
+        className="px-6 py-1 text-md rounded-sm self-center duration-200 border border-neutral-700 bg-neutral-700 hover:bg-transparent"
+      >
         Logout
       </button>
     </div>

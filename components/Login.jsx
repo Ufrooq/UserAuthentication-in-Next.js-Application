@@ -1,8 +1,11 @@
 "use client";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const Login = () => {
+  const router = useRouter();
   const [userData, setuserData] = useState({
     email: "",
     password: "",
@@ -13,15 +16,28 @@ const Login = () => {
     setuserData({ ...userData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = userData;
     if (email == "" || password == "") {
       seterrors(true);
       return;
     }
-    seterrors(false);
-    console.log(userData);
+    try {
+      const res = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+      console.log(res);
+      // if (!res.ok) {
+      //   seterrors(true);
+      //   return;
+      // }
+      router.replace("dashboard");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -40,7 +56,7 @@ const Login = () => {
           type="text"
           onChange={handleChange}
           name="email"
-          id=""
+          id="name"
         />
         <input
           className="px-2 py-2 bg-transparent outline-none rounded-sm border border-neutral-700 placeholder:text-neutral-600"
@@ -48,7 +64,7 @@ const Login = () => {
           type="password"
           onChange={handleChange}
           name="password"
-          id=""
+          id="password"
         />
         <button
           type="submit"

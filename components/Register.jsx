@@ -1,14 +1,17 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const Register = () => {
+  const router = useRouter();
   const [userData, setuserData] = useState({
     fullname: "",
     email: "",
     password: "",
   });
   const [errors, seterrors] = useState(false);
+  const [errorMessage, seterrorMessage] = useState(false);
 
   const handleChange = (e) => {
     setuserData({ ...userData, [e.target.name]: e.target.value });
@@ -19,6 +22,7 @@ const Register = () => {
     const { fullname, email, password } = userData;
     if (fullname == "" || email == "" || password == "") {
       seterrors(true);
+      seterrorMessage("Invalid Credientials!");
       return;
     }
     try {
@@ -31,19 +35,23 @@ const Register = () => {
           password,
         }),
       });
-
+      const data = await response.json();
+      console.log(data);
       if (response.ok) {
         seterrors(false);
         e.target.reset();
+        router.push("/");
+      } else {
+        seterrorMessage(data.formattedErrorMessage.email);
       }
     } catch (error) {
-      console.log(error);
+      seterrorMessage("Unexpected Error occured !");
     }
   };
   return (
     <div className="rounded-lg border px-7 py-6 transition border-neutral-700 hover:dark:bg-neutral-800/30">
       {errors && (
-        <p className="text-center text-red-600 pb-4">Invalid Credientials !</p>
+        <p className="text-center text-red-600 pb-4">{errorMessage}</p>
       )}
       <h2 className={`my-2 text-3xl font-semibold`}>Registration Form</h2>
       <p className={`m-0 mb-3 max-w-[30ch] text-md opacity-50`}>
@@ -56,7 +64,7 @@ const Register = () => {
           type="text"
           onChange={handleChange}
           name="fullname"
-          id=""
+          id="fullname"
         />
         <input
           className="px-2 py-2 bg-transparent outline-none rounded-sm border border-neutral-700 placeholder:text-neutral-600"
@@ -64,7 +72,7 @@ const Register = () => {
           type="text"
           onChange={handleChange}
           name="email"
-          id=""
+          id="email"
         />
         <input
           className="px-2 py-2 bg-transparent outline-none rounded-sm border border-neutral-700 placeholder:text-neutral-600"
@@ -72,7 +80,7 @@ const Register = () => {
           type="password"
           onChange={handleChange}
           name="password"
-          id=""
+          id="password"
         />
         <button
           type="submit"
