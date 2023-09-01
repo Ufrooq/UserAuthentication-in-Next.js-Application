@@ -29,12 +29,14 @@ const Login = () => {
         password,
         redirect: false,
       });
-      console.log(res);
-      // if (!res.ok) {
-      //   seterrors(true);
-      //   return;
-      // }
-      router.replace("dashboard");
+      console.log(res.error);
+      if (res.error == null) {
+        seterrors(false);
+        router.replace("dashboard");
+      } else {
+        seterrors(true);
+        return;
+      }
     } catch (error) {
       console.log(error);
     }

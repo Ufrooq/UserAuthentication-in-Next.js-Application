@@ -2,7 +2,7 @@ import userModel from "@/models/usersModel";
 import { dbConnection } from "@/utils/dbConnection";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcryptjs from "bcrypt";
+import bcryptjs from "bcryptjs";
 
 const authHandler = NextAuth({
   providers: [
@@ -11,12 +11,13 @@ const authHandler = NextAuth({
       credentials: {},
       async authorize(credentials) {
         const { email, password } = credentials;
-        console.log(email);
         try {
           await dbConnection();
           const user = await userModel.findOne({ email });
+          console.log(user);
           // if password does'nt matches or user is'nt find returning null!!
           if (!user) {
+            console.log("user not find");
             return null;
           }
           const isPasswordCorrect = await bcryptjs.compare(
