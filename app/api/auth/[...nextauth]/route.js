@@ -27,7 +27,6 @@ const authHandler = NextAuth({
           if (!isPasswordCorrect) {
             return null;
           }
-          // if password matches returning user!!
           return user;
         } catch (error) {
           console.log(error);
