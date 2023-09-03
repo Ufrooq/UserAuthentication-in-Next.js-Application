@@ -4,7 +4,7 @@ import { dbConnection } from "@/utils/dbConnection";
 import userModel from "@/models/usersModel";
 
 const handleErrors = (errMess) => {
-  let errorsObj = { fullname: "", email: "", password: "" };
+  let errorsObj = { name: "", email: "", password: "" };
   // duplicate email validation
   if (errMess.code === 11000) {
     errorsObj.email = "This email already exists !!";
@@ -20,10 +20,10 @@ const handleErrors = (errMess) => {
 };
 export const POST = async (req) => {
   try {
-    const { fullname, email, password } = await req.json();
+    const { name, email, password } = await req.json();
     const hashedPassword = await bcrypt.hash(password, 10);
     await dbConnection();
-    await userModel.create({ fullname, email, password: hashedPassword });
+    await userModel.create({ name, email, password: hashedPassword });
     return NextResponse.json(
       {
         message: "user registered successfully !",

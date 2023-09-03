@@ -14,7 +14,6 @@ const authHandler = NextAuth({
         try {
           await dbConnection();
           const user = await userModel.findOne({ email });
-          console.log(user);
           // if password does'nt matches or user is'nt find returning null!!
           if (!user) {
             console.log("user not find");
@@ -27,7 +26,8 @@ const authHandler = NextAuth({
           if (!isPasswordCorrect) {
             return null;
           }
-          return user;
+          const userData = { email: user.email, name: user.name };
+          return userData;
         } catch (error) {
           console.log(error);
         }

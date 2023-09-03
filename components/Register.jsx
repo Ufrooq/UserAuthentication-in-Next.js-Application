@@ -6,7 +6,7 @@ import React, { useState } from "react";
 const Register = () => {
   const router = useRouter();
   const [userData, setuserData] = useState({
-    fullname: "",
+    name: "",
     email: "",
     password: "",
   });
@@ -19,8 +19,8 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { fullname, email, password } = userData;
-    if (fullname == "" || email == "" || password == "") {
+    const { name, email, password } = userData;
+    if (name == "" || email == "" || password == "") {
       seterrors(true);
       seterrorMessage("Invalid Credientials!");
       return;
@@ -30,7 +30,7 @@ const Register = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          fullname,
+          name,
           email,
           password,
         }),
@@ -63,8 +63,8 @@ const Register = () => {
           placeholder="Enter fullname"
           type="text"
           onChange={handleChange}
-          name="fullname"
-          id="fullname"
+          name="name"
+          id="name"
         />
         <input
           className="px-2 py-2 bg-transparent outline-none rounded-sm border border-neutral-700 placeholder:text-neutral-600"
